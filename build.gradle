@@ -1,0 +1,39 @@
+apply from: "config.gradle"
+apply plugin: 'com.alibaba.arouter'
+buildscript {
+    ext.kotlinVersion = '1.4.21'
+    ext.arouter_register_version = '1.0.2'
+    repositories {
+        google()
+        jcenter()
+
+        maven { url "https://jitpack.io" }
+        maven { url 'https://maven.aliyun.com/repository/releases' }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath 'com.tencent.bugly:symtabfileuploader:2.2.1'
+        classpath "com.alibaba:arouter-register:$arouter_register_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url 'https://dl.bintray.com/umsdk/release' }
+        maven { url rootProject.ext.maven["jitpack"] }
+        maven { url rootProject.ext.maven["aliyun"] }
+        maven { url rootProject.ext.maven["bintray"] }
+
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+

@@ -1,0 +1,27 @@
+ext {
+    //Android 配置
+    android = [
+            compileSdkVersion: 29,
+            buildToolsVersion: "29.0.3",
+            applicationId    : "os.imlive.demo",
+            minSdkVersion    : 21,
+            targetSdkVersion : 29,
+            versionCode      : 126,
+            versionName      : "1.2.6",
+            javaVersion      : JavaVersion.VERSION_1_8,
+            lifecycleVersion : "2.2.0",
+    ]
+
+    //仓库
+    maven = [
+            "jitpack": "https://jitpack.io",
+            "aliyun" : 'https://maven.aliyun.com/repository/releases',
+            "bintray": 'https://dl.bintray.com/umsdk/release'
+    ]
+
+    //keystore
+    keystorePath = rootDir.toString() + '\\floating.jks'
+    keystorePassword = 'floating@friends'
+    alias = 'floating'
+    aliasPassword = 'floating@friends'
+}

@@ -1,0 +1,286 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
+//apply plugin: 'walle'
+static def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getDefault())
+}
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    defaultConfig {
+        applicationId rootProject.ext.android["applicationId"]
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        //Android Studio 3.0 之后 多渠道需要配置方向
+        flavorDimensions "default"
+        multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
+        sourceSets {
+            main.jniLibs.srcDirs = ['libs']
+        }
+
+        repositories {
+            flatDir {
+                dirs 'libs'
+            }
+        }
+
+        ndk {
+            //bugly
+            // 设置支持的SO库架构
+            abiFilters 'armeabi-v7a', 'armeabi' //'arm64-v8a'//,'armeabi','x86_64 , 'x86',
+        }
+    }
+
+    // AS3.0 自定义APK安装包名
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "PoPoSdk-v${variant.versionName}-${releaseTime()}-${variant.buildType.name}-${variant.productFlavors.name}.apk"
+
+        }
+    }
+
+    //签名配置
+    signingConfigs {
+        debug {
+            storeFile file(rootProject.ext.keystorePath)
+            storePassword rootProject.ext.keystorePassword
+            keyAlias rootProject.ext.alias
+            keyPassword rootProject.ext.aliasPassword
+        }
+        release {
+            storeFile file(rootProject.ext.keystorePath)
+            storePassword rootProject.ext.keystorePassword
+            keyAlias rootProject.ext.alias
+            keyPassword rootProject.ext.aliasPassword
+        }
+    }
+
+    //打包配置
+    buildTypes {
+        debug {
+            buildConfigField "String", "BASE_URL", "\"http://testapi.pp.suishoubo666.com\""
+            //清理无用资源
+            shrinkResources false
+            //是否启动ZipAlign压缩
+            zipAlignEnabled true
+            //是否混淆
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+            debuggable true
+        }
+        release {
+            buildConfigField "String", "BASE_URL", "\"https://api.pp.suishoubo666.com\""
+            //清理无用资源
+            shrinkResources true
+            //是否启动ZipAlign压缩
+            zipAlignEnabled true
+            //是否混淆
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //签名
+            signingConfig signingConfigs.release
+        }
+    }
+
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+
+    //渠道配置
+    productFlavors {
+        popo_gw {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "popo_gw"]
+        }
+        tg01 {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "tg01"]
+        }
+        tg02 {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "tg02"]
+        }
+        tg03 {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "tg03"]
+        }
+        xiaomi {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "xiaomi"]
+        }
+        yingyongbao {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "yingyongbao"]
+        }
+        meizu {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "meizu"]
+        }
+        huawei {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "huawei"]
+        }
+        oppo {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "oppo"]
+        }
+        vivo {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "vivo"]
+        }
+        qh360 {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "qh360"]
+        }
+        baidu {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "baidu"]
+        }
+        sougou {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "sougou"]
+        }
+        google {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "google"]
+        }
+        lenovo {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "lenovo"]
+        }
+        samsung {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "samsung"]
+        }
+        ali {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "ali"]
+        }
+        kuaishou {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "kuaishou"]
+        }
+        piaopiao021 {
+            manifestPlaceholders = [APP_CHANNEL_VALUE: "piaopiao021"]
+        }
+        //....
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.android["javaVersion"]
+        targetCompatibility rootProject.ext.android["javaVersion"]
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    packagingOptions {
+        exclude 'lib/armeabi-v7a/libBugly.so'
+        exclude 'lib/arm64-v8a/libBugly.so'
+    }
+}
+
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds' // don't cache changing modules at all
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    implementation 'org.jetbrains:annotations:16.0.1'
+
+    implementation 'com.alibaba:arouter-api:1.5.1'
+    kapt 'com.alibaba:arouter-compiler:1.5.1'
+
+    api 'androidx.appcompat:appcompat:1.2.0'
+    api 'androidx.multidex:multidex:2.0.1'
+    api 'androidx.constraintlayout:constraintlayout:2.0.4'
+    api 'androidx.fragment:fragment-ktx:1.2.5'
+    api "androidx.room:room-runtime:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5"
+    api 'com.android.support:design:29.0.3'
+
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    api "io.reactivex.rxjava2:rxjava:2.2.10"
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    api 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+
+    api 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.8.0'
+    api 'com.facebook.fresco:fresco:2.0.0'
+    api 'de.hdodenhof:circleimageview:3.1.0'
+    api 'com.github.chrisbanes.photoview:library:1.2.4'
+
+    kapt 'org.permissionsdispatcher:permissionsdispatcher-processor:4.5.0'
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.23'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+    api 'com.tencent.bugly:crashreport:3.2.422'
+    api 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
+    api 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+    api 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    api 'com.noober.background:core:1.6.3'
+    api 'com.ufreedom.uikit:FloatingTextLibrary:0.2.0'
+    api 'com.orhanobut:logger:2.2.0'
+    api 'me.grantland:autofittextview:0.2.1'
+    api 'com.github.yyued:SVGAPlayer-Android:2.1.10'
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.6.0'
+    api 'org.greenrobot:eventbus:3.2.0'
+    api 'org.apache.commons:commons-text:1.6'
+    api 'com.google.guava:guava:28.1-android'
+    api 'com.belerweb:pinyin4j:2.5.0'
+    api 'com.yunpian:captcha:1.0.4'
+    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    api 'com.tencent.liteav:LiteAVSDK_TRTC:8.3.9882'
+
+    api 'com.umeng.umsdk:xiaomi-push:3.7.0'
+    api 'com.umeng.umsdk:xiaomi-umengaccs:1.1.4'
+    api 'com.umeng.umsdk:vivo-push:2.3.5'
+    api 'com.umeng.umsdk:vivo-umengaccs:1.1.0'
+    api 'com.umeng.umsdk:meizu-push:3.8.7'
+    api 'com.umeng.umsdk:meizu-umengaccs:1.1.1'
+    api 'com.umeng.umsdk:huawei-basetb:2.6.0.301'
+    api 'com.umeng.umsdk:huawei-pushtb:2.6.0.301'
+    api 'com.umeng.umsdk:huawei-umengaccs:1.1.3'
+    api 'com.umeng.umsdk:oppo-push:1.0.1'
+    api 'com.umeng.umsdk:oppo-umengaccs:1.0.3'
+
+    compileOnly(name: 'floatlive-debug', ext: 'aar')
+    compileOnly(name: 'audience-debug', ext: 'aar')
+    compileOnly(name: 'common-debug', ext: 'aar')
+    compileOnly(name: 'baselibrary-debug', ext: 'aar')
+    compileOnly(name: 'resource-debug', ext: 'aar')
+    compileOnly(name: 'framework-debug', ext: 'aar')
+    compileOnly(name: 'captcha-release_v3.2.0', ext: 'aar')
+    compileOnly(name: 'im-debug', ext: 'aar')
+    compileOnly(name: 'sharetrace-android-sdk_v1.2.2', ext: 'aar')
+}
+
+allprojects {
+    repositories {
+
+        // 支付宝 SDK AAR 包所需的配置
+        flatDir {
+            dirs 'libs'
+        }
+
+        google()
+        jcenter()
+    }
+}
