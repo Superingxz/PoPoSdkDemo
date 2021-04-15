@@ -5,7 +5,7 @@ import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_sdk_demo.*
 import os.imlive.base.http.response.LoginResponse
-import os.imlive.floating.FloatLiveManager
+import os.imlive.sdk.FloatLiveManager
 
 /**
  * <pre>

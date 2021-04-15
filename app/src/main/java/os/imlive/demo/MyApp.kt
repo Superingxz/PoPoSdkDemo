@@ -1,6 +1,6 @@
 package os.imlive.demo
 
-import os.imlive.floating.FloatingApplication
+import os.imlive.sdk.FloatingApplication
 
 /**
  * <pre>

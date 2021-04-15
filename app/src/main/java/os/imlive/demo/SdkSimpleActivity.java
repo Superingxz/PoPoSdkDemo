@@ -10,8 +10,7 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import os.imlive.base.http.response.LoginResponse;
-import os.imlive.floating.FloatLiveManager;
-import os.imlive.floating.listener.LoginListener;
+import os.imlive.sdk.FloatLiveManager;
 
 /**
  * <pre>
@@ -51,25 +50,22 @@ public class SdkSimpleActivity extends AppCompatActivity {
             }
             FloatLiveManager.getInstance()
                     .getLoginInstance(this)
-                    .setLoginListener(new LoginListener() {
-                        @Override
-                        public void onLoginState(int state, String msg) {
-                            switch (state) {
-                                case LoginResponse.FAILED: // 登陆失败
-                                    ToastKit.show(SdkSimpleActivity.this, msg);
-                                    break;
-                                case LoginResponse.AUTH_FAILED: // 授权失败
-                                    ToastKit.show(SdkSimpleActivity.this, R.string.string_auth_failed);
-                                    break;
-                                case LoginResponse.AUTH_CANCEL: // 授权取消
-                                    ToastKit.show(SdkSimpleActivity.this, R.string.string_auth_cancel);
-                                    break;
-                                case LoginResponse.NEED_REGISTER: // 未注册
-                                    ToastKit.show(SdkSimpleActivity.this, R.string.string_need_register);
-                                    break;
-                                case LoginResponse.TOKEN_AUTH_FAILED: // token校验失效
-                                    break;
-                            }
+                    .setLoginListener((state, msg) -> {
+                        switch (state) {
+                            case LoginResponse.FAILED: // 登陆失败
+                                ToastKit.show(SdkSimpleActivity.this, msg);
+                                break;
+                            case LoginResponse.AUTH_FAILED: // 授权失败
+                                ToastKit.show(SdkSimpleActivity.this, R.string.string_auth_failed);
+                                break;
+                            case LoginResponse.AUTH_CANCEL: // 授权取消
+                                ToastKit.show(SdkSimpleActivity.this, R.string.string_auth_cancel);
+                                break;
+                            case LoginResponse.NEED_REGISTER: // 未注册
+                                ToastKit.show(SdkSimpleActivity.this, R.string.string_need_register);
+                                break;
+                            case LoginResponse.TOKEN_AUTH_FAILED: // token校验失效
+                                break;
                         }
                     })
                     .loginSdk(this, tokenEt.getText().toString(), userIdEt.getText().toString());
