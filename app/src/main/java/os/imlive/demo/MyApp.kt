@@ -10,8 +10,4 @@ import os.imlive.floating.FloatingApplication
  *     desc  :
  * </pre>
  */
-class MyApp : FloatingApplication() {
-    override fun onCreate() {
-        super.onCreate()
-    }
-}
+class MyApp : FloatingApplication()
