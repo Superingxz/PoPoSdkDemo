@@ -5,7 +5,10 @@ import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_sdk_demo.*
 import os.imlive.base.http.response.LoginResponse
+import os.imlive.base.widget.dialog.CommDialog
+import os.imlive.common.ui.wallet.dialog.RechargeDialog
 import os.imlive.sdk.FloatLiveManager
+import os.imlive.sdk.util.FloatLiveTools
 
 /**
  * <pre>
@@ -15,13 +18,11 @@ import os.imlive.sdk.FloatLiveManager
  *     desc  : SDKDemo
  * </pre>
  */
-class SdkActivity : AppCompatActivity() {
+class DemoKtActivity : AppCompatActivity() {
+    private var commDialog: CommDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sdk_demo)
-        // 登录SDK前需要调用
-        FloatLiveManager.getInstance().getLoginInstance(this)
-            .getThirdAdviceParams()
         initViews()
     }
 
@@ -31,11 +32,11 @@ class SdkActivity : AppCompatActivity() {
         }
         login.setOnClickListener {
             if (TextUtils.isEmpty(tokenEt.text.toString())) {
-                ToastKit.show(this, R.string.value_token_input)
+                ToastKit.show(this, R.string.sdk_input_token)
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(userIdEt.text.toString())) {
-                ToastKit.show(this, R.string.value_user_id_input)
+                ToastKit.show(this, R.string.sdk_input_user_id)
                 return@setOnClickListener
             }
             FloatLiveManager.getInstance()
@@ -46,19 +47,35 @@ class SdkActivity : AppCompatActivity() {
                             ToastKit.show(this, msg)
                         }
                         LoginResponse.AUTH_FAILED -> { // 授权失败
-                            ToastKit.show(this, R.string.string_auth_failed)
+                            ToastKit.show(this, R.string.sdk_string_auth_failed)
                         }
                         LoginResponse.AUTH_CANCEL -> { // 授权取消
-                            ToastKit.show(this, R.string.string_auth_cancel)
+                            ToastKit.show(this, R.string.sdk_string_auth_cancel)
                         }
                         LoginResponse.NEED_REGISTER -> { // 未注册
-                            ToastKit.show(this, R.string.string_need_register)
+                            ToastKit.show(this, R.string.sdk_string_need_register)
                         }
                         LoginResponse.TOKEN_AUTH_FAILED -> { // token校验失效
                         }
                     }
                 }
-                .loginSdk(this, tokenEt.text.toString(), userIdEt.text.toString())
+                .auth(this, tokenEt.text.toString(), userIdEt.text.toString())
+        }
+        clearCacheTv.setOnClickListener {
+            if (commDialog == null) {
+                commDialog = CommDialog(this)
+            }
+            commDialog?.showDialogComm(
+                {
+                    FloatLiveTools.clearCache()
+                    ToastKit.show(this, R.string.clear_cache_success)
+                    commDialog?.dismiss()
+                },
+                R.string.clear_cache_confirm, null, R.string.cancel, R.string.sure, R.string.remind
+            )
+        }
+        FloatLiveManager.getInstance().setRechargeCallback { context ->
+            RechargeDialog().show(context.supportFragmentManager, "rechargeDialog")
         }
     }
 }

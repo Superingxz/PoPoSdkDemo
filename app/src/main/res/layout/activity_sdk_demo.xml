@@ -5,15 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".SdkActivity">
+    tools:context=".DemoKtActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/white">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/backImg"
@@ -29,64 +29,77 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:text="@string/sdk_title_login"
+            android:textColor="@color/main_text_color"
+            android:textSize="@dimen/text_size_title"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/clearCacheTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp_14"
+            android:text="@string/sdk_string_clear_cache"
             android:textColor="@color/main_text_color"
             android:textSize="@dimen/text_size_title"
             android:textStyle="bold"
-            android:text="登录SDK"/>
+            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/tokenEt"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginEnd="12dp"
         android:layout_weight="1"
         android:background="@null"
         android:gravity="center"
-        android:hint="请输入恋恋Token值"
+        android:hint="@string/sdk_input_token"
         android:inputType="phone"
         android:maxLength="15"
+        android:text=""
         android:textColor="@color/main_text_color"
         android:textColorHint="@color/hint_text_color"
         android:textCursorDrawable="@drawable/color_cursor"
         android:textSize="@dimen/text_size_18"
-        android:text=""/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/userIdEt"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tokenEt"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_marginEnd="12dp"
         android:layout_weight="1"
         android:background="@null"
         android:gravity="center"
-        android:hint="请输入恋恋UserId值"
+        android:hint="@string/sdk_input_user_id"
         android:inputType="phone"
         android:maxLength="15"
+        android:text=""
         android:textColor="@color/main_text_color"
         android:textColorHint="@color/hint_text_color"
         android:textCursorDrawable="@drawable/color_cursor"
         android:textSize="@dimen/text_size_18"
-        android:text=""/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tokenEt" />
 
     <TextView
         android:id="@+id/login"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginTop="@dimen/dp_20"
-        android:padding="@dimen/dp_20"
         android:background="@drawable/btn_comm_pink_50_normal"
+        android:gravity="center"
+        android:padding="@dimen/dp_20"
+        android:text="@string/sdk_btn_login"
         android:textColor="@color/white"
-        android:text="登录"
         android:textSize="@dimen/sp_14"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -28,10 +28,10 @@ public class ToastKit {
             return;
         }
         if (message.contains("No address associated with hostname")) {
-            message = "请检查网络状态";
+            message = context.getString(R.string.sdk_string_net_not_address);
         }
         if (message.contains("HttpException")) {
-            message = "[网络异常]";
+            message = context.getString(R.string.sdk_string_net_error);
         }
         if (toastView == null) {
             toastView = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.toast_text_layout, null);

@@ -7,7 +7,7 @@ import os.imlive.sdk.FloatingApplication
  *     author: myz
  *     email : moyaozhi@imdawei.com
  *     time  : 2021/4/6 18:16
- *     desc  :
+ *     desc  : Application
  * </pre>
  */
-class MyApp : FloatingApplication()
+class App : FloatingApplication()
