@@ -2,6 +2,7 @@ package os.imlive.demo;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.FloatMath;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -87,5 +88,11 @@ public class DemoActivity extends AppCompatActivity {
         FloatLiveManager.getInstance().setRechargeCallback(context -> {
             new RechargeDialog().show(context.getSupportFragmentManager(), "rechargeDialog");
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FloatLiveManager.getInstance().unregister();
     }
 }
