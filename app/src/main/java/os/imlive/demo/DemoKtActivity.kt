@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_sdk_demo.*
+import os.imlive.base.data.model.manager.UserManager
 import os.imlive.base.http.response.LoginResponse
 import os.imlive.base.widget.dialog.CommDialog
 import os.imlive.common.ui.wallet.dialog.RechargeDialog
@@ -27,6 +28,8 @@ class DemoKtActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        tokenEt.setText(UserManager.getInstance().myTokenLianLian)
+        userIdEt.setText(UserManager.getInstance().userIdLianLian)
         backImg.setOnClickListener {
             finish()
         }
@@ -77,5 +80,10 @@ class DemoKtActivity : AppCompatActivity() {
         FloatLiveManager.getInstance().setRechargeCallback { context ->
             RechargeDialog().show(context.supportFragmentManager, "rechargeDialog")
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        FloatLiveManager.getInstance().unregister()
     }
 }
