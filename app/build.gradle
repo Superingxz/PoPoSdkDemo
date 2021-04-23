@@ -270,9 +270,7 @@ dependencies {
     compileOnly(name: 'common_1.2.6', ext: 'aar')
     compileOnly(name: 'baselibrary_1.2.6', ext: 'aar')
     compileOnly(name: 'resource_1.2.6', ext: 'aar')
-    compileOnly(name: 'framework-debug', ext: 'aar')
     compileOnly(name: 'captcha-release_v3.2.0', ext: 'aar')
-    compileOnly(name: 'im-debug', ext: 'aar')
     compileOnly(name: 'sharetrace-android-sdk_v1.2.2', ext: 'aar')
 }
 
