@@ -2,7 +2,6 @@ package os.imlive.demo;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.FloatMath;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -38,7 +37,7 @@ public class DemoActivity extends AppCompatActivity {
     private void initViews() {
         AppCompatImageView backImg = findViewById(R.id.backImg);
         AppCompatEditText tokenEt = findViewById(R.id.tokenEt);
-        AppCompatEditText userIdEt = findViewById(R.id.userIdEt);
+        AppCompatEditText thirdUidEt = findViewById(R.id.thirdUidEt);
         TextView loginTv = findViewById(R.id.login);
         AppCompatTextView clearCacheTv = findViewById(R.id.clearCacheTv);
         backImg.setOnClickListener(v -> {
@@ -49,7 +48,7 @@ public class DemoActivity extends AppCompatActivity {
                 ToastKit.show(this, R.string.sdk_input_token);
                 return;
             }
-            if (TextUtils.isEmpty(userIdEt.getText().toString())) {
+            if (TextUtils.isEmpty(thirdUidEt.getText().toString())) {
                 ToastKit.show(this, R.string.sdk_input_user_id);
                 return;
             }
@@ -73,7 +72,7 @@ public class DemoActivity extends AppCompatActivity {
                                 break;
                         }
                     })
-                    .auth(this, tokenEt.getText().toString(), userIdEt.getText().toString());
+                    .auth(this, tokenEt.getText().toString(), Long.parseLong(thirdUidEt.getText().toString()));
         });
         clearCacheTv.setOnClickListener(v -> {
             if (commDialog == null) {

@@ -28,8 +28,10 @@ class DemoKtActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        tokenEt.setText(UserManager.getInstance().myTokenLianLian)
-        userIdEt.setText(UserManager.getInstance().userIdLianLian)
+        tokenEt.setText(UserManager.getInstance().myThirdToken)
+        if (UserManager.getInstance().thirdUid != 0L) {
+            thirdUidEt.setText(UserManager.getInstance().thirdUid.toString())
+        }
         backImg.setOnClickListener {
             finish()
         }
@@ -38,7 +40,7 @@ class DemoKtActivity : AppCompatActivity() {
                 ToastKit.show(this, R.string.sdk_input_token)
                 return@setOnClickListener
             }
-            if (TextUtils.isEmpty(userIdEt.text.toString())) {
+            if (TextUtils.isEmpty(thirdUidEt.text.toString())) {
                 ToastKit.show(this, R.string.sdk_input_user_id)
                 return@setOnClickListener
             }
@@ -62,7 +64,7 @@ class DemoKtActivity : AppCompatActivity() {
                         }
                     }
                 }
-                .auth(this, tokenEt.text.toString(), userIdEt.text.toString())
+                .auth(this, tokenEt.text.toString(), thirdUidEt.text.toString().toLong())
         }
         clearCacheTv.setOnClickListener {
             if (commDialog == null) {

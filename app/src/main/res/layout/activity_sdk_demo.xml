@@ -55,7 +55,7 @@
         android:layout_weight="1"
         android:background="@null"
         android:gravity="center"
-        android:hint="请输入恋恋Token值"
+        android:hint="@string/sdk_input_token"
         android:text=""
         android:textColor="@color/main_text_color"
         android:textColorHint="@color/hint_text_color"
@@ -67,7 +67,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/userIdEt"
+        android:id="@+id/thirdUidEt"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_10"
@@ -75,8 +75,9 @@
         android:layout_weight="1"
         android:background="@null"
         android:gravity="center"
-        android:hint="请输入恋恋UserId值"
+        android:hint="@string/sdk_input_user_id"
         android:text=""
+        android:inputType="numberDecimal"
         android:textColor="@color/main_text_color"
         android:textColorHint="@color/hint_text_color"
         android:textCursorDrawable="@drawable/color_cursor"
@@ -84,6 +85,27 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tokenEt" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/thirdTidEt"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginEnd="12dp"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center"
+        android:hint="请输入恋恋thridTid值"
+        android:text=""
+        android:inputType="numberDecimal"
+        android:textColor="@color/main_text_color"
+        android:textColorHint="@color/hint_text_color"
+        android:textCursorDrawable="@drawable/color_cursor"
+        android:textSize="@dimen/text_size_18"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thirdUidEt"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/login"
@@ -98,6 +120,6 @@
         android:textSize="@dimen/sp_14"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userIdEt" />
+        app:layout_constraintTop_toBottomOf="@+id/thirdTidEt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
