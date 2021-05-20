@@ -252,16 +252,6 @@ dependencies {
     api 'com.yunpian:captcha:1.0.4'
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     api 'com.tencent.liteav:LiteAVSDK_TRTC:8.3.9882'
-
-    compileOnly(name: 'floatlive_1.2.6', ext: 'aar')
-    compileOnly(name: 'audience_1.2.6', ext: 'aar')
-    compileOnly(name: 'common_1.2.6', ext: 'aar')
-    compileOnly(name: 'baselibrary_1.2.6', ext: 'aar')
-    compileOnly(name: 'resource_1.2.6', ext: 'aar')
-    compileOnly(name: 'im_1.2.6', ext: 'aar')
-    compileOnly(name: 'captcha-release_v3.2.0', ext: 'aar')
-    compileOnly(name: 'sharetrace-android-sdk_v1.2.2', ext: 'aar')
-    compileOnly(name: 'oaid_sdk_1.0.22', ext: 'aar')
 }
 
 allprojects {
