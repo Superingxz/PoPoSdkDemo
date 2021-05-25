@@ -1,0 +1,11 @@
+<resources>
+    <style name="Theme.AppCompat.Light.FloatNoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorAccent">@color/pink</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:editTextStyle">@style/EditViewStyle</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
+    </style>
+</resources>
